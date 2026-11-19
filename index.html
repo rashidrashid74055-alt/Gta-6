@@ -393,6 +393,10 @@ function addXp(n){
   save(); refreshHudStatic();
 }
 
+/* ---------------- weather state (declared early: used by world building) ---------------- */
+const W={rain:0,rainT:0,fog:0,fogT:0,tod:.3,night:false,next:8};
+function isNight(){ return W.tod>.72||W.tod<.16; }
+
 /* ---------------- audio ---------------- */
 const AU={ctx:null,on:false};
 function initAudio(){
@@ -828,9 +832,7 @@ function applyUpgradesToStats(){
   ST.nitroCap=40+c.s.nit*.55+m.nit*7;
 }
 
-/* ---------------- weather ---------------- */
-const W={rain:0,rainT:0,fog:0,fogT:0,tod:.3,night:false,next:8};
-function isNight(){ return W.tod>.72||W.tod<.16; }
+/* ---------------- weather update ---------------- */
 function updateWeather(dt){
   W.next-=dt;
   if(W.next<=0){
